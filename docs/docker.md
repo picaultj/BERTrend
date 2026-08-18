@@ -66,6 +66,11 @@ EMBEDDING_SERVICE_URL=https://your-embedding-host:6464 \
   docker compose -f docker-compose.lightweight.yml up -d
 ```
 
+Alternatively, use the convenience script `./start_bertrend_lightweight.sh`,
+which sets `HOST_UID`/`HOST_GID` (so files written to mounted volumes are owned
+by the host user), creates the mounted host directories, checks that
+`EMBEDDING_SERVICE_URL` is set, and (re)builds and starts the stack.
+
 `EMBEDDING_SERVICE_URL` is **required** (compose refuses to start without it) and
 must point to your running embedding server; `EMBEDDING_SERVICE_USE_LOCAL` is
 forced to `false`. All other variables (`OPENAI_*`, `BERTREND_BASE_DIR`,

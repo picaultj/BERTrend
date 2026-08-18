@@ -19,6 +19,9 @@ from bertrend.bertrend_apps.prospective_demo.dashboard_common import (
     get_df_topics,
 )
 from bertrend.bertrend_apps.prospective_demo.i18n import translate
+from bertrend.bertrend_apps.prospective_demo.topic_search import (
+    filter_topics_by_keywords,
+)
 from bertrend.demos.demos_utils.icons import (
     NOISE_ICON,
     STRONG_SIGNAL_ICON,
@@ -82,11 +85,22 @@ def signal_analysis():
 
     col1, col2 = st.columns(COLS_RATIO)
     with col1:
-        # Display dataframes for weak_signals, strong, etc
+        # Keyword search to filter topics by title / description / representation
+        search_query = st.text_input(
+            translate("search_topics"),
+            placeholder=translate("search_topics_placeholder"),
+            key="topic_search_query",
+        )
+        if search_query and search_query.strip():
+            st.caption(
+                translate("search_active").format(query=search_query.strip())
+            )
+
+        # Display dataframes for weak_signals, strong, etc (filtered by the search)
         display_translated_signal_categories(
-            dfs_topics[NOISE],
-            dfs_topics[WEAK_SIGNALS],
-            dfs_topics[STRONG_SIGNALS],
+            filter_topics_by_keywords(dfs_topics[NOISE], search_query),
+            filter_topics_by_keywords(dfs_topics[WEAK_SIGNALS], search_query),
+            filter_topics_by_keywords(dfs_topics[STRONG_SIGNALS], search_query),
             reference_ts,
             columns=columns,
             column_config=column_config,

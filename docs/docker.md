@@ -51,6 +51,30 @@ BERTREND_BASE_DIR=/path/to/your/data/directory
    - Weak Signals: http://localhost:8502
    - Prospective Demo: http://localhost:8503
 
+## Lightweight Deployment (external embedding server)
+
+If you already run an embedding server elsewhere (another host, container, or
+cluster), you can start **only the main BERTrend application** with the
+lightweight compose file. It does not build or start the embedding server and
+does not reserve a GPU, so it runs on a modest / CPU-only host. It reuses the
+same image built from `Dockerfile` — there is no separate Dockerfile to
+maintain.
+
+```bash
+EMBEDDING_SERVICE_URL=https://your-embedding-host:6464 \
+  docker compose -f docker-compose.lightweight.yml up -d
+```
+
+`EMBEDDING_SERVICE_URL` is **required** (compose refuses to start without it) and
+must point to your running embedding server; `EMBEDDING_SERVICE_USE_LOCAL` is
+forced to `false`. All other variables (`OPENAI_*`, `BERTREND_BASE_DIR`,
+`BERTREND_CLIENT_SECRET`, proxies, …) behave as in the full stack and can be set
+in your `.env`. If this host has a GPU and you want the app itself to use it,
+copy the `deploy:` block from `docker-compose.yml` into the service.
+
+Use the standard `docker-compose.yml` instead when you also want the embedding
+server running locally.
+
 ## Building the Docker Images Locally
 
 If you want to build the Docker images locally:

@@ -55,10 +55,11 @@ BERTREND_BASE_DIR=/path/to/your/data/directory
 
 If you already run an embedding server elsewhere (another host, container, or
 cluster), you can start **only the main BERTrend application** with the
-lightweight compose file. It does not build or start the embedding server and
-does not reserve a GPU, so it runs on a modest / CPU-only host. It reuses the
-same image built from `Dockerfile` — there is no separate Dockerfile to
-maintain.
+lightweight compose file. It does not build or start the embedding server, and
+reuses the same image built from `Dockerfile` — there is no separate Dockerfile
+to maintain. The app still reserves a GPU (used to speed up topic modelling —
+BERTopic / UMAP / HDBSCAN); to run on a CPU-only host, remove the `deploy:`
+block (and `CUDA_VISIBLE_DEVICES`) from the service.
 
 ```bash
 EMBEDDING_SERVICE_URL=https://your-embedding-host:6464 \
@@ -69,8 +70,7 @@ EMBEDDING_SERVICE_URL=https://your-embedding-host:6464 \
 must point to your running embedding server; `EMBEDDING_SERVICE_USE_LOCAL` is
 forced to `false`. All other variables (`OPENAI_*`, `BERTREND_BASE_DIR`,
 `BERTREND_CLIENT_SECRET`, proxies, …) behave as in the full stack and can be set
-in your `.env`. If this host has a GPU and you want the app itself to use it,
-copy the `deploy:` block from `docker-compose.yml` into the service.
+in your `.env`.
 
 Use the standard `docker-compose.yml` instead when you also want the embedding
 server running locally.

@@ -228,6 +228,20 @@ TRANSLATIONS = {
     "no_data": {"fr": "Pas de données", "en": "No data"},
     "topic": {"fr": "Sujet", "en": "Topic"},
     "untitled_topic": {"fr": "???Titre???", "en": "???Title???"},
+    "signal_map_title": {
+        "fr": "Carte des signaux (impact vs incertitude)",
+        "en": "Signal map (impact vs uncertainty)",
+    },
+    "signal_map_help": {
+        "fr": "Chaque point est un sujet, positionné selon son impact (popularité) "
+        "et son incertitude (déduite du volume de documents et de la diversité "
+        "des sources). Scores normalisés sur [0, 1].",
+        "en": "Each point is a topic, positioned by its impact (popularity) and "
+        "its uncertainty (derived from document volume and source diversity). "
+        "Scores are normalized to [0, 1].",
+    },
+    "impact_axis": {"fr": "Impact", "en": "Impact"},
+    "uncertainty_axis": {"fr": "Incertitude", "en": "Uncertainty"},
     "explore_sources": {"fr": "Exploration des sources", "en": "Explore Sources"},
     "reference_articles": {"fr": "Articles de référence", "en": "Reference Articles"},
     # Signal categories

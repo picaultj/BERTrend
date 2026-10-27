@@ -228,6 +228,18 @@ TRANSLATIONS = {
     "no_data": {"fr": "Pas de données", "en": "No data"},
     "topic": {"fr": "Sujet", "en": "Topic"},
     "untitled_topic": {"fr": "???Titre???", "en": "???Title???"},
+    "search_topics": {
+        "fr": "Rechercher des sujets par mots-clés",
+        "en": "Search topics by keywords",
+    },
+    "search_topics_placeholder": {
+        "fr": "ex. énergie nucléaire",
+        "en": "e.g. nuclear energy",
+    },
+    "search_active": {
+        "fr": "Filtrage des sujets contenant : {query}",
+        "en": "Filtering topics containing: {query}",
+    },
     "explore_sources": {"fr": "Exploration des sources", "en": "Explore Sources"},
     "reference_articles": {"fr": "Articles de référence", "en": "Reference Articles"},
     # Signal categories

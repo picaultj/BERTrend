@@ -19,6 +19,10 @@ from bertrend.bertrend_apps.prospective_demo.dashboard_common import (
     get_df_topics,
 )
 from bertrend.bertrend_apps.prospective_demo.i18n import translate
+from bertrend.bertrend_apps.prospective_demo.signal_characterization import (
+    compute_signal_characterization,
+    plot_signal_characterization,
+)
 from bertrend.demos.demos_utils.icons import (
     NOISE_ICON,
     STRONG_SIGNAL_ICON,
@@ -79,6 +83,26 @@ def signal_analysis():
     }
 
     dfs_topics = get_df_topics(model_interpretation_path)
+
+    # Impact x uncertainty characterization map (issue #59)
+    with st.expander(f"🗺️ {translate('signal_map_title')}", expanded=False):
+        char_df = compute_signal_characterization(dfs_topics)
+        if char_df.empty:
+            st.warning(f"{WARNING_ICON} {translate('no_data')}")
+        else:
+            st.caption(translate("signal_map_help"))
+            fig = plot_signal_characterization(
+                char_df,
+                signal_type_labels={
+                    WEAK_SIGNALS: translate("weak_signals"),
+                    STRONG_SIGNALS: translate("strong_signals"),
+                    NOISE: translate("noise"),
+                },
+                title=translate("signal_map_title"),
+                impact_label=translate("impact_axis"),
+                uncertainty_label=translate("uncertainty_axis"),
+            )
+            st.plotly_chart(fig, width="stretch")
 
     col1, col2 = st.columns(COLS_RATIO)
     with col1:
